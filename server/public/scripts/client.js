@@ -1,10 +1,9 @@
-
 $(document).ready(onReady);
 
 function onReady() {
     console.log('js ready!');
     //have past entries stay on DOM
-    getAnswers();
+    //getAnswers();
     //click listeners
     $('#equalButton').on('click', makeNumberObject);
     $('#plusButton').on('click', addPlus);
@@ -15,6 +14,7 @@ function onReady() {
     $('#resetButton').on('click', clearDom);
 }
 
+
 let operator;
 
 //post requests
@@ -22,26 +22,26 @@ let operator;
 
 //making the object to send to the server
 function makeNumberObject() {
-    console.log('clicked equals')
-    firstNumber: Number($('#firstNumber').val()),
-        secondNumber; Number($('#secondNumber').val()),
+    console.log('clicked equals');
+    let calcsToDo = {
+        firstNumber: Number($('#firstNumber').val()),
+        secondNumber: Number($('#secondNumber').val()),
         operator: operator
 
     }
     console.log(calcsToDo);
     //post inputs to server
-
-$.ajax({
-    method: 'POST',
-    url: '/calculator',
-    data: calcsToDo
-}).then(function (response) {
-    console.log(response);
-    getAnswers();
-})
+    $.ajax({
+        method: 'POST',
+        url: '/calculator',
+        data: calcsToDo
+    }).then(function (response) {
+        console.log(response);
+        getAnswers();
+    })
     //empty input
     $('input').val('');
-
+}
 
 //get requests
 
@@ -52,7 +52,6 @@ function getAnswers() {
     }).then(function (response) {
         console.log(response);
         $('#answerHistory').append(`<li>${response}</li>`);
-
     })
 
 }
@@ -78,13 +77,13 @@ function addDivide() {
     operator = operatorToPost;
 }
 
-
+//reseting the page
 function clearInputs() {
     $('input').val('');
 }
 
 function clearDom() {
-    console.log('yessir');
+    console.log('yessirr!');
     $.ajax({
         method: 'GET',
         url: '/clearDom'
