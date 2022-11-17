@@ -14,7 +14,7 @@ function onReady() {
     $('#resetButton').on('click', clearDom);
 }
 
-
+    getHistory();
 let operator;
 
 //post requests
@@ -31,7 +31,7 @@ function makeNumberObject() {
     }
     console.log(calcsToDo);
     //post inputs to server
-    $.ajax({
+     $.ajax({
         method: 'POST',
         url: '/calculator',
         data: calcsToDo
@@ -52,6 +52,7 @@ function getAnswers() {
     }).then(function (response) {
         console.log(response);
         $('#answerHistory').append(`<li>${response}</li>`);
+        getHistory();
     })
 
 }
@@ -77,7 +78,7 @@ function addDivide() {
     operator = operatorToPost;
 }
 
-//reseting the page
+//resetting the page
 function clearInputs() {
     $('input').val('');
 }
@@ -93,3 +94,24 @@ function clearDom() {
         $('#answerHistory').append(response);
     })
 };
+
+function getHistory() {
+    // Get history from the server
+    $.ajax({
+      method: 'GET',
+      url: '/history',
+    })
+    .then( displayHistory );
+}
+
+// Calling the response history here
+function displayHistory(history) {
+    console.log()
+  $('#answerHistory').empty();
+
+ 
+  for(let item of history) {
+    const li = `<li>${item}</li>`;
+    $('#answerHistory').append(li); 
+  }
+}

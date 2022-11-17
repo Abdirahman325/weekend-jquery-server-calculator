@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 //store these in an array to keep the history
 let equationString = [];
 let equation;
-
+let history = [];
 
 // get body parser started
 app.use(bodyParser.urlencoded({ extended: true }));
